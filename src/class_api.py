@@ -46,6 +46,7 @@ class HH_API(API):
         return areas
 
     def formate_vacancies(self, all_vacancies):
+        '''приведение списка вакансий к нужному формату '''
         vacancies = {'vacancies': []}
         for vacancy in all_vacancies['items']:
             if vacancy['salary'] is None:
@@ -64,26 +65,35 @@ class SJ_API(API):
     SJ_API_URL = 'https://api.superjob.ru/2.0/vacancies/'
     SJ_API_URL_AREAS = 'https://api.superjob.ru/2.0/towns/'
     api_key = os.getenv('J_API')
-    # # headers = {"X-Api-App-Id": api_key}
-    def __init__(self):
+    headers = {"X-Api-App-Id": api_key}
+    def __init__(self, keyword):
 
        self.base_url = "https://api.superjob.ru/2.0"
-
+       self.SJ_API_URL = 'https://api.superjob.ru/2.0/vacancies/'
+       self.prof_name = keyword
        self.params = {
-        'count': 100,
-        'id': 1
+        "keyword": self.prof_name,
+        'id': 1,
+        'count': 1
         }
-    #     self.headers = {"X-Api-App-Id": api_key}
-    def get_vacancies(self, keyword, count = 10):
+        # self.headers = {"X-Api-App-Id": api_key} 'id': 1
 
+
+    def get_vacancies(self):                          #, keyword, count = 10):
         url = f"{self.base_url}/vacancies"
-        headers = { "X-Api-App-Id": self.api_key}
-        params = { "keyword": keyword, 'count': count,
-        # если город не введен поиск ведется по всей России (установлено по умолчанию)
-        'id': 1 }
-        response = requests.get(url, headers=headers, params=params)
-        vacancies = response.json()['objects']
-        return vacancies
+        api_key = os.getenv('J_API')
+        headers = {"X-Api-App-Id": api_key}
+        response = requests.get( url, params = self.params, headers = headers )
+        return response.json()
+
+        # url = f"{self.base_url}/vacancies"
+        # headers = { "X-Api-App-Id": self.api_key}
+        # params = { "keyword": keyword, 'count': count,
+        # # если город не введен поиск ведется по всей России (установлено по умолчанию)
+        # 'id': 1 }
+        # response = requests.get(url, headers=headers, params=params)
+        # vacancies = response.json()['objects']
+        # return vacancies
 
     def load_areas(self):
         headers = {"X-Api-App-Id": self.api_key}
@@ -96,4 +106,19 @@ class SJ_API(API):
         return result
 
     def formate_vacancies(self, all_vacancies):
+        '''приведение списка вакансий к нужному формату '''
+        # vacancies = {'vacancies': []}
+        # for vacancy in all_vacancies['objects']:
+        #     if vacancy['payment_from'] is None:
+        #         payment_from = "З/п не указана"
+        #     elif vacancy['payment_from']['from'] is None:
+        #         salary = vacancy['payment_from']['to']
+        #     elif vacancy['payment_from']['to'] is None:
+        #         salary = vacancy['payment_from']['from']
+        #     else:
+        #         salary = (int(vacancy['payment_from']['from']) + int(vacancy['payment_from']['to'])) // 2
+        #     new_job = {'name': vacancy['name'], 'url': vacancy['url'], 'salary': salary,
+        #                'experience': vacancy['experience']['name']}
+        #     vacancies['vacancies'].append(new_job)
+        # return vacancies
         pass

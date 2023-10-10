@@ -3,13 +3,15 @@ from pprint import pprint
 
 hh_api = HH_API('pytnon')
 all_vacancies = hh_api.get_vacancies()
-# print(all_vacancies )
-pprint(hh_api.formate_vacancies(all_vacancies))
+pprint(all_vacancies )
+# pprint(hh_api.formate_vacancies(all_vacancies))
 # pprint(hh_api.load_areas())
 
-# sj_api = SJ_API()
-# # pprint(sj_api.load_areas())
-# pprint(sj_api.get_vacancies('python'))
+
+# sj_api = SJ_API('pytnon')
+# # # pprint(sj_api.load_areas())
+# all_vacancies_sj = sj_api.get_vacancies()
+# pprint(all_vacancies_sj)  #'python'
 #----------------------------------------------
 # print('введите параметры поиска')
 #
