@@ -13,7 +13,7 @@ class HH_API(API):
         self.params = {
             'per_page': 100,
             'text': keyword,
-            'area': 67
+            'area': 1
         }
         self.keyword = keyword
     def __repr__(self):
@@ -80,8 +80,11 @@ class SJ_API(API):
         }
         # self.headers = {"X-Api-App-Id": api_key} 'id': 1
 
+    def __repr__(self):
+        return (f"{self.__class__.__name__}('{self.params['count']}', {self.params['keyword']},"
+                f" {self.params['id']}')")
 
-    def get_vacancies(self):                          #, keyword, count = 10):
+    def get_vacancies(self):
         """Получение всех вакансий """
         url = f"{self.base_url}/vacancies"
         api_key = os.getenv('J_API')
@@ -93,8 +96,8 @@ class SJ_API(API):
 
         # lst = []
         # for row in data:
-        #
-        #     lst.append(Vacancy(name=row['title'],url=row['link'], salary=100, exp='asdf'))
+        #     lst.append(Vacancy(name=row['profession'], url=row['link'],
+        #                 salary=row['payment_from'], exp=row['profession']))
         # return lst
         return response.json()
 
