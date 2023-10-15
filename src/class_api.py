@@ -7,7 +7,7 @@ import json
 class HH_API(API):
     """Класс для получения вакансий по API c hh.ru"""
     HH_API_URL = 'https://api.hh.ru/vacancies'
-    HH_API_URL_AREAS = 'https://api.hh.ru/areas'
+    # HH_API_URL_AREAS = 'https://api.hh.ru/areas'
 
     def __init__(self, keyword):
         self.params = {
@@ -24,27 +24,7 @@ class HH_API(API):
         '''Получение вакансий '''
         response = requests.get(self.HH_API_URL, self.params)
         return response.json()
-        # response_data = json.loads(response.text)
-        # if 'items' in response_data:
-        #     return response_data['items']
-        # else:
-        #     return []
 
-
-    def load_areas(self):
-        '''список городов'''
-        req = requests.get(self.HH_API_URL_AREAS)
-        dict_areas = req.json()
-
-        areas = {}
-        for k in dict_areas:
-            for i in range(len(k['areas'])):
-                if len(k['areas'][i]['areas']) != 0:
-                    for j in range(len(k['areas'][i]['areas'])):
-                        areas[k['areas'][i]['areas'][j]['name'].lower()] = k['areas'][i]['areas'][j]['id']
-                else:
-                    areas[k['areas'][i]['name'].lower()] = k['areas'][i]['id']
-        return areas
 
     def formate_vacancies(self, all_vacancies):
         '''приведение списка вакансий к нужному формату '''
@@ -65,7 +45,7 @@ class HH_API(API):
 class SJ_API(API):
     """Класс для получения вакансий по API superjob.ru"""
     SJ_API_URL = 'https://api.superjob.ru/2.0/vacancies/'
-    SJ_API_URL_AREAS = 'https://api.superjob.ru/2.0/towns/'
+    #SJ_API_URL_AREAS = 'https://api.superjob.ru/2.0/towns/'
     api_key = os.getenv('J_API')
     headers = {"X-Api-App-Id": api_key}
     def __init__(self, keyword):
@@ -76,9 +56,9 @@ class SJ_API(API):
        self.params = {
         "keyword": self.prof_name,
         'id': 1,
-        'count': 10
+        'count': 29
         }
-        # self.headers = {"X-Api-App-Id": api_key} 'id': 1
+
 
     def __repr__(self):
         return (f"{self.__class__.__name__}('{self.params['count']}', {self.params['keyword']},"
@@ -101,24 +81,7 @@ class SJ_API(API):
         # return lst
         return response.json()
 
-        # url = f"{self.base_url}/vacancies"
-        # headers = { "X-Api-App-Id": self.api_key}
-        # params = { "keyword": keyword, 'count': count,
-        # # если город не введен поиск ведется по всей России (установлено по умолчанию)
-        # 'id': 1 }
-        # response = requests.get(url, headers=headers, params=params)
-        # vacancies = response.json()['objects']
-        # return vacancies
 
-    def load_areas(self):
-        headers = {"X-Api-App-Id": self.api_key}
-        result = {}
-        response = requests.get(self.SJ_API_URL_AREAS, headers=headers, params={'id_country': 1, 'all': 1})
-        response_data = json.loads(response.text)
-        for area in response_data['objects']:
-            result[area["title"].lower()] = area["id"]
-
-        return result
 
     def formate_vacancies(self, all_vacancies):
         '''приведение списка вакансий к нужному формату '''

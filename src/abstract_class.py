@@ -7,9 +7,9 @@ class API(ABC):
     def get_vacancies(self):
         pass
 
-    @abstractmethod
-    def load_areas(self):
-        pass
+    # @abstractmethod
+    # def load_areas(self):
+    #     pass
 
     @abstractmethod
     def formate_vacancies(self, all_vacancies):

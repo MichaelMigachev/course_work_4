@@ -26,9 +26,9 @@ class Vacancy:
         }
     @staticmethod
     def instantiate_from_json(file_name='vacancies.json'):
-        # with open(file_name, 'r', encoding="utf-8", errors='ignore') as json_file:
+        '''создаём список экземпляров класса из json файла'''
+
         data = Json_save.get_vacancies()
-             # data = json.load(json_file)
 
         for vacancy in data['vacancies']:
             Vacancy.all.append(Vacancy(vacancy['name'], vacancy['url'], vacancy['salary'], vacancy['experience']))
@@ -56,3 +56,18 @@ class Vacancy:
                 f'Вакансия №{count}:\nНазвание:{vacancy.name}\nЗарплата:{vacancy.salary} '
                 f'рублей\nОпыт работы: {vacancy.exp}\nАдрес объявления: {vacancy.url}\n')
             count += 1
+
+    @staticmethod
+    def output_final_result(all_vacancies, total_view):
+        '''финальный результат поиска, вывод в консоль'''
+
+        Json_save.add_vacancy(all_vacancies)          # добавляем в список информацию о вакансиях в файл формата json.
+
+        vacancies = Vacancy.instantiate_from_json()   # создаём список экземпляров класса из json файла
+        numbers_of_vacancies = len(vacancies)
+        top_vacancies = Vacancy.get_top_vacancies(top_n=total_view, vacancies=vacancies)
+
+        sort_vacancies = Vacancy.sort_vacancies()
+        top_vacancies = Vacancy.get_top_vacancies(top_n=total_view, vacancies=sort_vacancies)
+
+        Vacancy.print_vacancies(top_vacancies)
