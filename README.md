@@ -10,6 +10,9 @@ Python, ООП, PostgreSQL, requests
 Ссылка на клонирование проекта:
 https://github.com/MichaelMigachev/course_work_4
 
+выполни команду: python main.py
+
+
 Выбери название вакансии, например 'python'
 Выбери платформу: 1 - HeadHunter 2 - SuperJob 0 - Выйти
 Укажи Сколько вакансий вывести (меньше 100)
