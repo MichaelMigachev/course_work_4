@@ -82,7 +82,6 @@ class SJ_API(API):
         return response.json()
 
 
-
     def formate_vacancies(self, all_vacancies):
         '''приведение списка вакансий к нужному формату '''
         vacancies = {'vacancies': []}
